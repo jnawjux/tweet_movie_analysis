@@ -1,4 +1,6 @@
-# Import the necessary methods from tweepy library
+# Based on the work of Adil Moujahid (adilmoujahid/Twitter_Analytics)
+
+# Import packages and config
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
