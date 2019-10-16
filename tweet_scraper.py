@@ -5,14 +5,22 @@ from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
 from config import consumer_key, consumer_secret, access_token, access_token_secret
+import ast
 
 
 # This is a basic listener that just prints received tweets to stdout.
 class StdOutListener(StreamListener):
 
     def on_data(self, data):
-        print(data)
-        return True
+        data_dict = ast.literal_eval(data)
+        if (data_dict["lang"] == "en"):
+            print(data_dict["text"])
+            # print({"twitter_id": data["id"],
+            #        "created_at": data["created_at"],
+            #        "user_id": data["user"]["screen_name"],
+            #        "followers_count": data["user"]["followers_count"],
+            #        "text": data["text"]})
+            return True
 
     def on_error(self, status):
         print(status)
