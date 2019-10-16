@@ -11,19 +11,19 @@ import ast
 # This is a basic listener that just prints received tweets to stdout.
 class StdOutListener(StreamListener):
 
-    def on_data(self, data):
-        data_dict = ast.literal_eval(data)
-        if (data_dict["lang"] == "en"):
-            print(data_dict["text"])
-            # print({"twitter_id": data["id"],
-            #        "created_at": data["created_at"],
-            #        "user_id": data["user"]["screen_name"],
-            #        "followers_count": data["user"]["followers_count"],
-            #        "text": data["text"]})
+    def on_status(self, status):
+        if (status.lang == "en") & (status.user.followers_count > 1000):
+            print({"twitter_id": status.id,
+                   "created_at": status.user.created_at,
+                   "followers_count": status.user.followers_count,
+                   "text": status.text,
+                   "retweet": status.retweeted})
             return True
 
-    def on_error(self, status):
-        print(status)
+    def on_error(self, status_code):
+        if status_code == 420:
+            # returning False in on_error disconnects the stream
+            return False
 
 
 if __name__ == '__main__':
