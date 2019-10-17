@@ -12,12 +12,12 @@ import ast
 class StdOutListener(StreamListener):
 
     def on_status(self, status):
-        if (status.lang == "en") & (status.user.followers_count > 1000):
+        if (status.lang == "en") & (status.user.followers_count >= 1000):
             print({"twitter_id": status.id,
+                   "name": status.user.screen_name,
                    "created_at": status.user.created_at,
                    "followers_count": status.user.followers_count,
-                   "text": status.text,
-                   "retweet": status.retweeted})
+                   "text": status.text})
             return True
 
     def on_error(self, status_code):
