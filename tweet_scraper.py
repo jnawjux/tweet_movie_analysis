@@ -15,14 +15,15 @@ import sys
 class StdOutListener(StreamListener):
 
     def on_status(self, status):
-        if (status.lang == "en") & (status.user.followers_count >= 1000):
-            text_for_output = "'" + status.full_text.replace('\n', ' ') + "'"
-            csvw.writerow([status.id,
-                           status.user.screen_name,
-                           status.created_at.strftime(
-                               '%d/%m/%y %I:%M %S %p'),
-                           status.user.followers_count,
-                           text_for_output])
+        if (status.lang == "en") & (status.user.followers_count >= 500):
+            # text_for_output = "'" + status..replace('\n', ' ') + "'"
+            # csvw.writerow([status.id,
+            #                status.user.screen_name,
+            #                status.created_at.strftime(
+            #                    '%d/%m/%y %I:%M %S %p'),
+            #                status.user.followers_count,
+            #                text_for_output])
+            print(status)
             return True
 
     def on_error(self, status_code):
@@ -40,7 +41,8 @@ if __name__ == '__main__':
     stream = Stream(auth, l)
 
     # Filter based on movie titles
-    csvw = csv.writer(open(sys.argv[-1], "a"))
-    csvw.writerow(['twitter_id', 'name', 'created_at',
-                   'followers_count', 'text'])
-    stream.filter(track=['jason voorhees', 'freddie krueger', 'michael myers'])
+    # csvw = csv.writer(open(sys.argv[-1], "a"))
+    # csvw.writerow(['twitter_id', 'name', 'created_at',
+    #                'followers_count', 'text'])
+    stream.filter(track=['dogs'])
+    # 'jason voorhees', 'freddie krueger', 'michael myers'
